@@ -16,9 +16,8 @@ public class Calculator {
         File myfile = new File("resources"); //Нужно нормальный путь к файлу записать.
         if(myfile.exists()) {
             System.out.println("File is found\n");
-            if(myfile.canRead()){
+            //if(myfile.canRead()){ }
 
-            }
         }
         else {
             System.out.println("File does not exist..." + '\n' + "input your commands using console\n");

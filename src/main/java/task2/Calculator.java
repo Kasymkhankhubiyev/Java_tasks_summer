@@ -1,24 +1,32 @@
 package task2;
 
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import com.sun.scenario.effect.impl.sw.java.JSWColorAdjustPeer;
+
+import java.io.*;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class Calculator {
     public static void main(String[] args) {
+        Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
         CommandFactory commandFactory;
         Context context;
-        InputStreamReader reader;
+        Scanner scanner;
     }
 
-    private InputStreamReader readFormConsole(){
-        return null;
+    private static Scanner readFormConsole(){
+        return new Scanner(System.in);
     }
 
-    private InputStreamReader readFormFile(String fileName){
-        //new InputStreamReader(new FileInputStream(fileName));
-        return null;
+    private static Scanner readFormFile(String fileName){
+        File file = new File(fileName);
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return scanner;
     }
 }

@@ -6,22 +6,23 @@ import java.util.Map;
 import java.util.Stack;
 
 public class Context {
-    Stack<Double> stack = new Stack<Double>();
-    Map<String, Double> map = new HashMap<String, Double>();
+    private Stack<Double> stack = new Stack<Double>();
+    private Map<String, Double> map = new HashMap<String, Double>();
+    private Writer writer;
 
     Context(Writer writer) {
-
+        this.writer = writer;
     }
 
-    Double getStack() { //дает самы верхний элемент и удаляется его из стека.
-        return stack.pop(); //почему не подходит?
+    Stack<Double> getStack() {
+        return stack;
     }
 
     Map<String, Double> getConstants() {
-        return null;
+        return map;
     }
 
     Writer getOutput() {
-        return null;
+        return writer;
     }
 }

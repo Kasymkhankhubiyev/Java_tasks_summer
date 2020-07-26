@@ -13,6 +13,13 @@ public class Calculator {
         CommandFactory commandFactory;
         Context context;
         Scanner scanner;
+
+        if (args.length == 0) {
+            scanner = readFormConsole();
+        } else {
+            scanner = readFormFile(args[0]);
+        }
+
     }
 
     private static Scanner readFormConsole(){

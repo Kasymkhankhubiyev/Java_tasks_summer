@@ -9,28 +9,24 @@ import java.util.Scanner;
 
 public class CommandFactory {
     private Map<String, Command> commandMap = new HashMap<>();
-    String terminator = " "; //это верно?
+    private final String terminator = " "; //это верно?
 
     private void init(){
-        getClass().getResourceAsStream("commands.txt");
         try{
-            File file = new File("commands.txt");
-            FileInputStream filestream = null;
-            filestream = new FileInputStream("commands.txt");
-            Scanner reader = null;
-            reader = new Scanner(filestream);
-            if(reader!=null){
-                while(reader.hasNext()){
-                    String string = reader.nextLine();
-                    String[] substring;
-                    substring = string.split(terminator,2);// я теперь должен вытаскивать значения? зачем вообще double в мапке?
-                    commandMap.put(substring[0],substring[1]);
-                }
-            } else throw new IOException();
+            FileInputStream fileStream = new FileInputStream("commands.txt");
+            Scanner reader = new Scanner(fileStream);
+            while(reader.hasNext()){
+                String string = reader.nextLine();
+                String[] substring;
+                substring = string.split(terminator,2);
+                Command command = (Command) Class.forName(substring[1]).newInstance();
+                commandMap.put(substring[0], command);
+            }
             //Properties prop = new Properties(); // создаю контейнер и откгружаю все сюда.
-            //prop.load(filestream);
+            //prop.load(fileStream);
 
         }catch (FileNotFoundException e){
+            //throw new DecodeException("Failed io initialize CommandFactory");
             e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();

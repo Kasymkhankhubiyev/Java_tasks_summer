@@ -39,7 +39,10 @@ public class CommandFactory {
         //fill coommandMap with actual data
     };
 
-    public Command createCommand(String commandName) throws DecodeException{
-        return  null;
+    public Command createCommand(String commandName) throws DecodeException {
+        Command command = commandMap.get(commandName);
+        if (command == null) {
+            throw new DecodeException("Command not found");
+        } else return command;
     }
 }

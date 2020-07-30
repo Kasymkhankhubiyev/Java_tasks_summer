@@ -2,7 +2,7 @@ package task2;
 
 import java.util.List;
 
-public class PUSH implements Command {
+public class Sum implements Command {
     @Override
     public void execute(Context context, List<String> args) throws CommandException {
 

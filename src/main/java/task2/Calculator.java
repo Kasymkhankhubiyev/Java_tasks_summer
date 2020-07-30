@@ -11,7 +11,7 @@ public class Calculator {
     public static void main(String[] args) {
         Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
         CommandFactory commandFactory;
-        Context context;
+        Context context = new Context(w);
         Scanner scanner;
 
         if (args.length == 0) {
@@ -19,6 +19,13 @@ public class Calculator {
         } else {
             scanner = readFormFile(args[0]);
         }
+        try{
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        }
+
 
     }
 

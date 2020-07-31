@@ -1,0 +1,2 @@
+PUSH task2.commands.Push
+SUM task2.commands.Sum

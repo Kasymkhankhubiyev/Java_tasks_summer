@@ -7,36 +7,24 @@ import java.util.Map;
 import java.util.Stack;
 
 public class Context {
-    private Stack<String> stack = new Stack<String>();
-    private String[] comList= null;
-    private Map<String,String> map = new HashMap<String,String>();
+    private Stack<Double> stack = new Stack<>(); //здесь дабл так как в стэке у нас только числа могут быть
+    // private String[] comList= null;   это нам не нужно
+    private Map<String, Double> constants = new HashMap<>(); // здесь мы храним наши константы, работать с ними будем через getConstants().push() и getConstants().get()
     private Writer writer;
 
     Context(Writer writer) {
         this.writer = writer;
     }
 
-    void setArray(int i, String str){
-        comList[i]=str;
-    }
-    String getArray(int i) {
-        return comList[i];
-    }
-    void putValuables(String a,String n){
-        map.put(a,n);
-    }
-    void setStack(String str){
-        stack.push(str);
-    }
-    //String getStack(int i) {
-      //  return stack;
-    //}
-    String getConstants(String string) {
-
-        return map.get(string);
+    public Stack<Double> getStack() {
+        return stack;
     }
 
-    Writer getOutput() {
+    public Map<String, Double> getConstants() {
+        return constants;
+    }
+
+    public Writer getWriter() {
         return writer;
-    }
+    }               //все что нам тут нужно - получить константы/стек/врайтер
 }

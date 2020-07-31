@@ -11,6 +11,7 @@ public class Calculator {
         CommandFactory commandFactory = null;
         Context context = new Context(w);
         Scanner scanner;
+        Command command;
         ArrayList<String> arguments = null;
         Map<String,String> argMap = new HashMap<>();
         final String delimeter = " ";
@@ -32,10 +33,10 @@ public class Calculator {
                 i++;
             }
             scanner.close();
-            int j=0;
-            while (j<i){
-
-            }
+            //command.execute(context,arguments);
+            //int j=0;
+            //while (j<i){
+            //}
         } catch (Exception e) {
             e.printStackTrace();
         }

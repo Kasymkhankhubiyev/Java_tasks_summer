@@ -36,7 +36,10 @@ public class Calculator {
             int j=0;
             while (j<i){
                 commandFactory.createCommand(context.getArray(j));
+                commandFactory.factoryWorkFlow(context.getArray(j),context, j);
+                j++;
             }
+
             //command.execute(context,arguments);
             //int j=0;
             //while (j<i){

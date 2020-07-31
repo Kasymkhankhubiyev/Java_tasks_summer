@@ -39,9 +39,9 @@ public class CommandFactory {
         } else return command;
     }
 
-    public void factoryWorkFlow(String commandName,Context context,String[] arguments) {
+    public void factoryWorkFlow(String commandName,Context context, int i) {
         try {
-            commandMap.get(commandName).execute(context, arguments);
+            commandMap.get(commandName).execute(context, i);
         } catch (Exception e) {
             e.printStackTrace();
         }

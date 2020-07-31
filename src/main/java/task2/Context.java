@@ -19,7 +19,7 @@ public class Context {
     void setArray(int i, String str){
         comList[i]=str;
     }
-    String getArray(int i){
+    String getArray(int i) {
         return comList[i];
     }
     void putValuables(String a,String n){
@@ -32,6 +32,7 @@ public class Context {
       //  return stack;
     //}
     String getConstants(String string) {
+
         return map.get(string);
     }
 

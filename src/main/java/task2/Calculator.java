@@ -3,17 +3,18 @@ package task2;
 import com.sun.scenario.effect.impl.sw.java.JSWColorAdjustPeer;
 
 import java.io.*;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Stack;
+import java.util.*;
 
 public class Calculator {
     public static void main(String[] args) {
         Writer w = new BufferedWriter(new OutputStreamWriter(System.out));
-        CommandFactory commandFactory;
+        CommandFactory commandFactory = null;
         Context context = new Context(w);
         Scanner scanner;
+        ArrayList<String> arguments = null;
+        Map<String,String> argMap = new HashMap<>();
         final String delimeter = " ";
+        int i =0;
 
         try{//заполняем сканнер, если вдргу что случится - поймаем, например файл в аргументе не работает.
             if (args.length == 0) {
@@ -25,6 +26,14 @@ public class Calculator {
                 String line = scanner.nextLine();//in which cases can we use scan.useDelimeter()?
                 String[] substring;
                 substring = line.split(delimeter,2); //how do we use READ with Scanner?
+                arguments.add(substring[1]);
+                commandFactory.createCommand(substring[0]);
+                //argMap.put(substring[0],substring[1]);
+                i++;
+            }
+            scanner.close();
+            int j=0;
+            while (j<i){
 
             }
         } catch (Exception e) {

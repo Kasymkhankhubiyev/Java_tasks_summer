@@ -24,15 +24,12 @@ public class CommandFactory {
             }
             //Properties prop = new Properties(); // создаю контейнер и откгружаю все сюда.
             //prop.load(fileStream);
-
         }catch (FileNotFoundException e){
             //throw new DecodeException("Failed io initialize CommandFactory");
             e.printStackTrace();
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        //fill coommandMap with actual data
     };
 
     public Command createCommand(String commandName) throws DecodeException {
@@ -40,5 +37,13 @@ public class CommandFactory {
         if (command == null) {
             throw new DecodeException("Command not found");
         } else return command;
+    }
+
+    public void factoryWorkFlow(String commandName,Context context,String[] arguments) {
+        try {
+            commandMap.get(commandName).execute(context, arguments);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

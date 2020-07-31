@@ -26,13 +26,17 @@ public class Calculator {
             while (scanner.hasNextLine()){ //получаем строки
                 String line = scanner.nextLine();//in which cases can we use scan.useDelimeter()?
                 String[] substring;
-                substring = line.split(delimeter,2); //how do we use READ with Scanner?
-                arguments.add(substring[1]);
-                commandFactory.createCommand(substring[0]);
+                substring = line.split(delimeter, 2); //how do we use READ with Scanner?
+                context.setStack(substring[0]);
+                context.putValuables(substring[0],substring[1]);
                 //argMap.put(substring[0],substring[1]);
                 i++;
             }
             scanner.close();
+            int j=0;
+            while (j<i){
+                commandFactory.createCommand(context.getArray(j));
+            }
             //command.execute(context,arguments);
             //int j=0;
             //while (j<i){

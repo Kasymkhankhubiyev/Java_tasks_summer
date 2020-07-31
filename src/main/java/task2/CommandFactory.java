@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class CommandFactory {
     private Map<String, Command> commandMap = new HashMap<>();
-    private final String terminator = " "; //это верно?
+    private final String terminator = " ";
 
     private void init(){
         try{

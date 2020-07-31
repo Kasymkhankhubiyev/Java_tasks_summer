@@ -13,20 +13,23 @@ public class Calculator {
         CommandFactory commandFactory;
         Context context = new Context(w);
         Scanner scanner;
+        final String delimeter = " ";
 
-        if (args.length == 0) {
-            scanner = readFormConsole();
-        } else {
-            scanner = readFormFile(args[0]);
-        }
-        try{
+        try{//заполняем сканнер, если вдргу что случится - поймаем, например файл в аргументе не работает.
+            if (args.length == 0) {
+                scanner = readFormConsole();
+            } else {
+                scanner = readFormFile(args[0]);
+            }
+            while (scanner.hasNextLine()){ //получаем строки
+                String line = scanner.nextLine();//in which cases can we use scan.useDelimeter()?
+                String[] substring;
+                substring = line.split(delimeter,2); //how do we use READ with Scanner?
 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        }
-
-
     }
 
     private static Scanner readFormConsole(){

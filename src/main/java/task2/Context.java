@@ -36,5 +36,5 @@ public class Context {
 
     public Writer getWriter() {
         return writer;
-    }               //все что нам тут нужно - получить константы/стек/врайтер
+    }
 }

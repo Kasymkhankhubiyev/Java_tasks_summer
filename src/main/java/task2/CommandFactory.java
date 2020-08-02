@@ -37,10 +37,10 @@ public class CommandFactory {
     };
 
     public Command createCommand(String commandName) throws DecodeException {
-        Command command = commandMap.get(commandName);
-        if (command == null) {
-            throw new DecodeException("Command not found");
-        } else return command;
+            Command command = commandMap.get(commandName);
+            if (command == null) {
+                throw new DecodeException("Command not found");
+            } else return command;
     }
 
 //    public void factoryWorkFlow(String commandName,Context context, int i) { // для этого у нас есть createCommand уже

@@ -20,7 +20,7 @@ public class Calculator {
                 scanner = readFormFile(args[0]);
             }
             while (scanner.hasNextLine()){ //получаем строки
-                String line = scanner.nextLine();//in which cases can we use scan.useDelimeter()?
+                String line = scanner.nextLine();
                 String[] substring = line.split(delimeter); //здесь у нас список из имени комманды и аргументов
                 List<String> lineWords = new ArrayList<>(Arrays.asList(substring)); // превращаем массив в ArrayList так как с ним удобнее работать
                 lineWords.removeIf(s -> s.isEmpty()); // удаляем все пустые строки, они могли появиться если мы напишем 2 пробелла подряд например

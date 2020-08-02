@@ -15,7 +15,10 @@ public class Sqrt implements Command {
 
             double variable1 = context.getConstants().remove(variableName1);
 
-            double a = context.getStack().pop();//два самых верхних из стека
+            double a = context.getStack().pop();// самый верхних из стека
+
+            if(context.getStack().size()<1)
+                throw new CommandException("There should be at least 2 values in the stack");
 
             if((Math.abs(a - variable1)<check)){
                 if(variable1>0){

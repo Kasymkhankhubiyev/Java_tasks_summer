@@ -17,6 +17,9 @@ public class Multiply implements Command {
             double variable1 = context.getConstants().remove(variableName1);
             double variable2 = context.getConstants().remove(variableName2);
 
+            if(context.getStack().size()<2)
+                throw new CommandException("There should be at least 2 values in the stack");
+
             double b = context.getStack().pop();//два самых верхних из стека
             double a = context.getStack().pop();
 

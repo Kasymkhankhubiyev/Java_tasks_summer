@@ -19,7 +19,8 @@ public class Calculator {
             } else {
                 scanner = readFormFile(args[0]);
             }
-            while (scanner.hasNextLine()){ //получаем строки
+
+            while (scanner.hasNextLine()&& !context.getExite()){ //получаем строки
                 String line = scanner.nextLine();
                 String[] substring = line.split(delimeter); //здесь у нас список из имени комманды и аргументов
                 List<String> lineWords = new ArrayList<>(Arrays.asList(substring)); // превращаем массив в ArrayList так как с ним удобнее работать

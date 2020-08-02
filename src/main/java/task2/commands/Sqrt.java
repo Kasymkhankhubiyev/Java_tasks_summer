@@ -10,24 +10,20 @@ public class Sqrt implements Command {
     @Override
     public void execute(Context context, List<String> args) throws CommandException {
         try{
-            final double check = 0.0000000001;
-            String variableName1 = args.get(0);
-
-            double variable1 = context.getConstants().remove(variableName1);
-
             double a = context.getStack().pop();// самый верхних из стека
 
             if(context.getStack().size()<1)
                 throw new CommandException("There should be at least 2 values in the stack");
 
-            if((Math.abs(a - variable1)<check)){
-                if(variable1>0){
-                    context.getConstants().put(variableName1, Math.sqrt(variable1));
-                    context.getStack().push(variable1);
-                }else
-                    throw new CommandException("Variable is negative, sqrt can't be done");
+
+            if(a>0){
+                //context.getConstants().put("const", Math.sqrt(a));
+                context.getStack().push(a);
             }else
-                throw new CommandException("Variable must be the highest in the Stack");
+                throw new CommandException("Variable is negative, sqrt can't be done");
+
+        }catch (CommandException ce){
+            throw ce;
         }catch(Exception e){
             throw new CommandException("Variables not found");
         }

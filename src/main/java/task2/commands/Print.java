@@ -12,7 +12,9 @@ public class Print implements Command {
         try {
             if(context.getStack().size()<1) throw new CommandException("No arguments in the Stack");
             context.getStack().peek();
-        } catch (Exception e) {
+        }catch (CommandException ce){
+            throw ce;
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }

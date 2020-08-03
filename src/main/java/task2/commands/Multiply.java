@@ -16,8 +16,8 @@ public class Multiply implements Command {
             double a = context.getStack().pop();//два самых верхних из стека
             double b = context.getStack().pop();
 
-            context.getConstants().put("const", a-b);
-            context.getStack().push(a-b);
+            context.getConstants().put("const", a*b);
+            context.getStack().push(a*b);
 
         }catch(CommandException ce){
           throw ce;

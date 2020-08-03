@@ -11,7 +11,7 @@ public class Print implements Command {
     public void execute(Context context, List<String> args) throws CommandException {
         try {
             if(context.getStack().size()<1) throw new CommandException("No arguments in the Stack");
-            context.getStack().peek();
+            System.out.println(context.getStack().peek());
         }catch (CommandException ce){
             throw ce;
         }catch (Exception e) {

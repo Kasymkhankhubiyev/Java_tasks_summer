@@ -13,8 +13,8 @@ public class Dif implements Command {
             if(context.getStack().size()<2)
                 throw new CommandException("There should be at least 2 values in the stack");
 
-            double a = context.getStack().pop();//два самых верхних из стека
-            double b = context.getStack().pop();
+            double b = context.getStack().pop();//два самых верхних из стека
+            double a = context.getStack().pop();
 
                 //context.getConstants().put("const",a-b);
                 context.getStack().push(a-b);

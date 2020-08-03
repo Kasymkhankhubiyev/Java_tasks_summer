@@ -6,11 +6,11 @@ import task2.Context;
 
 import java.util.List;
 
-public class Exite implements Command {
+public class Exit implements Command {
     @Override
     public void execute(Context context, List<String> args) throws CommandException {
         try{
-            context.setExite();
+            context.setExit();
         }catch (Exception e){
             e.printStackTrace();
         }

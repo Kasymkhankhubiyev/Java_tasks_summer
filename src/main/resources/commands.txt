@@ -1,2 +1,11 @@
 PUSH task2.commands.Push
 SUM task2.commands.Sum
+DEFINE task2.commands.Define
+DIV task2.commands.Div
+EXIT task2.commands.Exit
+MULTIPLY task2.commands.Multiply
+POP task2.commands.Pop
+PRINT task2.commands.Print
+PUSH task2.commands.Push
+SQRT task2.commands.Sqrt
+SUM task2.commands.Sum

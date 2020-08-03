@@ -20,7 +20,7 @@ public class Calculator {
                 scanner = readFormFile(args[0]);
             }
 
-            while (scanner.hasNextLine()&& !context.getExite()){ //получаем строки
+            while (scanner.hasNextLine()&& !context.getExit()){ //получаем строки
                 String line = scanner.nextLine();
                 String[] substring = line.split(delimeter); //здесь у нас список из имени комманды и аргументов
                 if(!substring[0].equals("#")) {

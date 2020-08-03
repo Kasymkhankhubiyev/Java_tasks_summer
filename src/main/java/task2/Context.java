@@ -11,19 +11,19 @@ public class Context {
     // private String[] comList= null;   это нам не нужно
     private Map<String, Double> constants = new HashMap<>(); // здесь мы храним наши константы, работать с ними будем через getConstants().push() и getConstants().get()
     private Writer writer;
-    private Boolean exitecondition;
+    private Boolean exitcondition;
 
     Context(Writer writer) {
         this.writer = writer;
-        exitecondition = false;
+        exitcondition = false;
     }
 
-    public Boolean getExite(){
-        return exitecondition;
+    public Boolean getExit(){
+        return exitcondition;
     }
 
-    public void setExite(){
-        exitecondition=true;
+    public void setExit(){
+        exitcondition=true;
     }
 
     public Stack<Double> getStack() {

@@ -5,6 +5,8 @@ import java.util.Objects;
 public class Coordinate {
     public final int x;
     public final int y;
+    public final int xStep = 1;
+    public final int yStep = 1;
 
     public Coordinate(int x, int y) {
         this.x = x;
@@ -15,9 +17,15 @@ public class Coordinate {
         return null;
     }
 
-    public Coordinate move(int dx, int dy) {
-        return new Coordinate(x + dx, y + dy);
+    public Coordinate move(Coordinate point) {
+        return new Coordinate(x + xStep, y + yStep);
     }
+
+    public Coordinate moveLeft(Coordinate point){ return new Coordinate(x-xStep,y);}
+
+    public Coordinate moveRight(Coordinate point){ return new Coordinate(x+xStep,y);}
+
+    public Coordinate moveDown(Coordinate point){ return new Coordinate (x, y+yStep);}
 
     @Override
     public boolean equals(Object o) {

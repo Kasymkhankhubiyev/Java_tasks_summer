@@ -1,5 +1,5 @@
 package task3.model;
 
 public enum FigureType {
-    LINE, SQUARE
+    L, J, I, Z, S, T, O
 }

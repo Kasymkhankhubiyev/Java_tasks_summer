@@ -17,15 +17,15 @@ public class Coordinate {
         return null;
     }
 
-    public Coordinate move(int x,int y) {
-        return new Coordinate(x + xStep, y + yStep);
-    }
+    public Coordinate move(int dx,int dy) {
+        return new Coordinate(x + dx * xStep, y + dy * yStep);
+    } // исправил ошибку
 
-    public Coordinate moveLeft(Coordinate point){ return new Coordinate(x-xStep,y);}
+    public Coordinate moveLeft(Coordinate point){ return new Coordinate(x - xStep,y);}
 
-    public Coordinate moveRight(Coordinate point){ return new Coordinate(x+xStep,y);}
+    public Coordinate moveRight(Coordinate point){ return new Coordinate(x + xStep,y);}
 
-    public Coordinate moveDown(Coordinate point){ return new Coordinate (x, y+yStep);}
+    public Coordinate moveDown(Coordinate point){ return new Coordinate (x, y + yStep);}
 
     @Override
     public boolean equals(Object o) {

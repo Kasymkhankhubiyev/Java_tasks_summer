@@ -8,21 +8,17 @@ public class ModelStateImpl implements ModelState{
     //TODO: (4) создать тут переменные и конструктор этого класса - суть класса - хранить КОНКРЕТНОЕ состояние модели чтобы его можно было прередать во View
     // все поля нужно сделать final
     // хранить информацию для метода getColor лучше в виде Map<Coordinate, Color>
+    // здесь нужны только те данные которые мы отдаем через интерфейс ModelState , поэтому fieldLenght/Width не нужны
 
-    boolean gameIsRun;
-    final int fieldLenght=100;
-    final int fieldWidth =100;
-    final Map<Coordinate, Color> coloreSet = null;
-    ModelStateImpl( Figure figure){
-        Set<Coordinate>iterator = figure.getCoordinates();
-       //while(iterator.hasnext()) {//как заполнить map?
-        for(Coordinate cor : iterator) {
-            Map< iterator(cor), getColor(figure.getx) >?????
-        }
-       }
+    final boolean gameIsRun;
+    final int score;
+    final Map<Coordinate, Color> colorSet;
 
+    public ModelStateImpl(boolean gameIsRun, int score, Map<Coordinate, Color> colorSet) {
+        this.gameIsRun = gameIsRun;
+        this.score = score;
+        this.colorSet = colorSet;
     }
-
 
     @Override
     public boolean isGameActive() {

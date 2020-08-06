@@ -15,6 +15,8 @@ public class FigureFactory {
                 for (int i = 0; i <= 3; i++) elements.add(new Coordinate(i, 1));
                 elements.add(new Coordinate(0, 0));
                 break;
+
+            //TODO: (2) добавить все оставшиеся типы фигур
             default:
                 throw new RuntimeException("Figure type not supported");
         }

@@ -12,9 +12,32 @@ public class FigureFactory {
                 for (int i = 0; i < 4; i++) elements.add(new Coordinate(i, 0));
                 break;
             case L:
-                for (int i = 0; i <= 3; i++) elements.add(new Coordinate(i, 1));
+                for (int i = 0; i < 3; i++) elements.add(new Coordinate(i, 1));
                 elements.add(new Coordinate(0, 0));
                 break;
+            case J:
+                for (int i = 0; i < 3; i++) elements.add(new Coordinate(i, 1));
+                elements.add(new Coordinate(3, 0));
+                break;
+            case O:
+                for(int i=0;i<=1;i++)
+                    for(int j=0;j<=1;j++) elements.add(new Coordinate(i,j));
+                break;
+            case T:
+                for(int i=0;i<3;i++) elements.add(new Coordinate(i,0));
+                elements.add(new Coordinate(1,1));
+                break;
+            case S:
+                elements.add(new Coordinate(2,0));
+                for(int i=0;i<=2;i++) elements.add(new Coordinate(1,i));
+                elements.add(new Coordinate(0,2));
+                break;
+            case Z:
+                elements.add(new Coordinate(0,0));
+                for(int i=0;i<=1;i++) elements.add(new Coordinate(1,i));
+                elements.add(new Coordinate(2,2));
+                break;
+
 
             //TODO: (2) добавить все оставшиеся типы фигур
             default:

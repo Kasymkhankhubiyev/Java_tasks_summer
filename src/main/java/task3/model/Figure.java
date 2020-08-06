@@ -31,4 +31,8 @@ public class Figure {
         );
         return ans;
     }
+
+    public Set<Coordinate> getCoordinates(){
+        return elements;
+    }
 }

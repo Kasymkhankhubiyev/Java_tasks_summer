@@ -1,10 +1,21 @@
 package task3.model;
 
 import java.util.List;
+import java.util.Set;
 
 public class ModelImpl implements Model{
     //TODO: (3) создать здесь все переменные которые определяют состояние модели:
     //  активна ли игра, текущая "падающая" фигура, координаты упавших ячеек, очки, список рекордов, экземпляр View, мб еще что-то
+    boolean gameIsRun; //если true - игра активна
+    int score;
+    Figure Figure;
+    Set<Coordinate> fallingFigure;
+    List<Integer> scoreList = null;
+    //View viewer = new View()
+    ModelImpl() {
+        score = 0;
+    }
+
 
     public void updateView() {
         //TODO: (9) создать здесь класс ModelStateImpl а затем вызвать у экземпляра View медод updateView передав в него созданый ModelStateImpl

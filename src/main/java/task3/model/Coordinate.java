@@ -17,7 +17,7 @@ public class Coordinate {
         return null;
     }
 
-    public Coordinate move(Coordinate point) {
+    public Coordinate move(int x,int y) {
         return new Coordinate(x + xStep, y + yStep);
     }
 

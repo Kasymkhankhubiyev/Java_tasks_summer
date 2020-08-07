@@ -23,18 +23,27 @@ public class ModelStateImpl implements ModelState{
     @Override
     public boolean isGameActive() {
         //TODO: (5) реализовать метод
-        return false;
+        return gameIsRun;
     }
 
     @Override
     public int getScore() {
         //TODO: (6) реализовать метод
-        return 0;
+        return score;
     }
 
     @Override
     public Color getColor(int x, int y) {
         //TODO: (7) реализовать метод
-        return null;
+        Coordinate coordinate = new Coordinate(x,y);
+        //Set<Coordinate> keys = coordinate.keySet();
+        Color color = null;//как проверить, что существует такая кордината?
+        try{
+            color = colorSet.get(coordinate);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return color;
     }
 }

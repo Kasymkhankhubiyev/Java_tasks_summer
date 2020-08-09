@@ -13,12 +13,12 @@ public class ModelImpl implements Model{
     Figure Figure;
     Map<Coordinate, Color> colorSet;
 
-    ModelImpl() {
+    ModelImpl() { //создаем поле
         for(int i =0; i< 10; i++) {
-            for (int j; j < 10; j++) {
-                Coordinate cor = new Coordinate(i,j);
-                Color color = "White";
-
+            for (int k=0; k <= 10; k++) {
+                Coordinate cor = new Coordinate(i,k);
+                Color color = Color.WHITE;
+                colorSet.put(cor,color);
             }
         }
         score = 0;
@@ -29,7 +29,7 @@ public class ModelImpl implements Model{
         //TODO: (9) создать здесь класс ModelStateImpl а затем вызвать у экземпляра View медод updateView передав в него созданый ModelStateImpl
         // самое сложное для создания ModelStateImpl - понять какие ячейки в какие цвета красить - нужно учесть как падующую фигуру так и лежащие на полу
         // далее мы должны дергать этот метод каждый раз после того как меняем состояние модели, чтобы оно отрисовалось
-        ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun,score,colorSet);
+       ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun,score,colorSet);
     }
 
     private void checkCompleteRow() {

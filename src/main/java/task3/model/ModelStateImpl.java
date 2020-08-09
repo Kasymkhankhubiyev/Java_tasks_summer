@@ -32,6 +32,10 @@ public class ModelStateImpl implements ModelState{
         return score;
     }
 
+    public Map<Coordinate, Color> getColorSet(){
+        return colorSet;
+    }
+
     @Override
     public Color getColor(int x, int y) {
         //TODO: (7) реализовать метод

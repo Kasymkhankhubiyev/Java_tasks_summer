@@ -21,6 +21,7 @@ public class ModelImpl implements Model{
         //TODO: (9) создать здесь класс ModelStateImpl а затем вызвать у экземпляра View медод updateView передав в него созданый ModelStateImpl
         // самое сложное для создания ModelStateImpl - понять какие ячейки в какие цвета красить - нужно учесть как падующую фигуру так и лежащие на полу
         // далее мы должны дергать этот метод каждый раз после того как меняем состояние модели, чтобы оно отрисовалось
+        ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun,score,modelState.);
     }
 
     private void checkCompleteRow() {

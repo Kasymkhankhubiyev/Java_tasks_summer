@@ -1,5 +1,7 @@
 package task3.model;
 
-public interface View {
-    void updateView(ModelState modelState);
+public class View {
+    void updateView(ModelState modelState){
+
+    }
 }

@@ -30,6 +30,8 @@ public class ModelImpl implements Model{
         // самое сложное для создания ModelStateImpl - понять какие ячейки в какие цвета красить - нужно учесть как падующую фигуру так и лежащие на полу
         // далее мы должны дергать этот метод каждый раз после того как меняем состояние модели, чтобы оно отрисовалось
        ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun,score,colorSet);
+       View view = new View();
+       view.updateView(modelStateImpl);
     }
 
     private void checkCompleteRow() {

@@ -1,5 +1,6 @@
 package task3.model;
 
+import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ public class Figure {
     final int x;
     final int y;
     final Set<Coordinate> elements;
+    Color color;
 
     public Figure(int x, int y, Set<Coordinate> elements) {
         this.x = x;
@@ -34,5 +36,9 @@ public class Figure {
 
     public Set<Coordinate> getCoordinates(){
         return elements;
+    }
+
+    public Color getColor(){
+        return color;
     }
 }

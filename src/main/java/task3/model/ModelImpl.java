@@ -24,13 +24,21 @@ public class ModelImpl implements Model{
         score = 0;
     }
 
+    public Figure createFigure(){ //нужно как-то рандомить
+        FigureFactory factory = new FigureFactory();
+            return factory.createFigure(FigureType.J);
+    }
+
+    //где-то нужно создавать фигуру?
 
     public void updateView() {
         //TODO: (9) создать здесь класс ModelStateImpl а затем вызвать у экземпляра View медод updateView передав в него созданый ModelStateImpl
-        // самое сложное для создания ModelStateImpl - понять какие ячейки в какие цвета красить - нужно учесть как падующую фигуру так и лежащие на полу
+        // самое сложное для создания ModelStateImpl - понять какие ячейки в какие цвета красить - нужно учесть как падующую фигуру так и лежащие на полу {}
         // далее мы должны дергать этот метод каждый раз после того как меняем состояние модели, чтобы оно отрисовалось
+
+        // {а почему сложно понять? мы генерируем фигуру, она сразу меняет состояние игрового поля, т.е. для соответсвующей координаты меняем цвет}
        ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun,score,colorSet);
-       View view = new View();
+       View view = new Viewer();
        view.updateView(modelStateImpl);
     }
 

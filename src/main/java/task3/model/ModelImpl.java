@@ -12,6 +12,7 @@ public class ModelImpl implements Model{
     int score;
     Figure Figure;
     Map<Coordinate, Color> colorSet;
+    Viewer view;
 
     ModelImpl() { //создаем поле
         for(int i =0; i< 10; i++) {
@@ -24,9 +25,9 @@ public class ModelImpl implements Model{
         score = 0;
     }
 
-    public Figure createFigure(){ //нужно как-то рандомить
+    public void createFigure(){ //нужно как-то рандомить
         FigureFactory factory = new FigureFactory();
-            return factory.createFigure(FigureType.J);
+        Figure figure = factory.createFigure(FigureType.J);
     }
 
     //где-то нужно создавать фигуру?
@@ -92,8 +93,9 @@ public class ModelImpl implements Model{
     }
 
     @Override
-    public void setView(View view) {
+    public void setView(Viewer view) {
         //TODO: (8) реализовать метод - нужно "запомнить" переданный вью
+        this.view = view;
 
     }
 }

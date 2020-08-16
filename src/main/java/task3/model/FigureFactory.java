@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class FigureFactory {
-    public Figure createFigure(FigureType figureType) {//здесь достаточно передавать только тип, сдвинуть фигуру на нужную координату мы сегда можем и так
+    public static Figure createFigure(FigureType figureType) {//здесь достаточно передавать только тип, сдвинуть фигуру на нужную координату мы сегда можем и так
         //фигуры друг от друга отличаются только набором элементов
         Set<Coordinate> elements = new HashSet<>();
         switch (figureType) {
@@ -38,8 +38,6 @@ public class FigureFactory {
                 elements.add(new Coordinate(2, 2));
                 break;
 
-
-            //TODO: (2) добавить все оставшиеся типы фигур
             default:
                 throw new RuntimeException("Figure type not supported");
         }

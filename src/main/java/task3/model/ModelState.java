@@ -6,5 +6,5 @@ public interface ModelState {
     boolean isGameActive();
 
     int getScore();
-    Color getColor(int x, int y);
+    boolean getColor(int x, int y);
 }

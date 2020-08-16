@@ -50,10 +50,11 @@ public class ModelImpl implements Model{
             }
             if (k == 10){
                 string = i;
-                //вызов метода очистки строки.
-                //вызов метода увеличения очков
+                stringClear(i);
+                scoreGrowth();
             }
         }
+        //нужно ли очищать столбец?
     }
 
     private void stringClear(int j){
@@ -91,6 +92,7 @@ public class ModelImpl implements Model{
     @Override
     public void moveLeft() {
         //TODO: (13) реализовать метод - нужно сдвинуть фигуру текущую влево в случае если мы можем это сделать (игра должна быть активна, нужные ячейки свободны)
+
     }
 
     @Override

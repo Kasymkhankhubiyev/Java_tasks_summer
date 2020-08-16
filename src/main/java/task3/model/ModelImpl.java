@@ -15,6 +15,7 @@ public class ModelImpl implements Model{
     Viewer view;
 
     ModelImpl() { //создаем поле
+        gameIsRun = true;
         for(int i =0; i< 10; i++) {
             for (int k=0; k <= 10; k++) {
                 Coordinate cor = new Coordinate(i,k);
@@ -24,13 +25,6 @@ public class ModelImpl implements Model{
         }
         score = 0;
     }
-
-    public void createFigure(){ //нужно как-то рандомить
-        FigureFactory factory = new FigureFactory();
-        Figure figure = factory.createFigure(FigureType.J);
-    }
-
-    //где-то нужно создавать фигуру?
 
     public void updateView() {
         //TODO: (9) создать здесь класс ModelStateImpl а затем вызвать у экземпляра View медод updateView передав в него созданый ModelStateImpl
@@ -45,6 +39,41 @@ public class ModelImpl implements Model{
 
     private void checkCompleteRow() {
         //TODO: (15) этот метод мы будем вызывать каждый раз когда нужно проверить заполненные полностью линии и удалить + начислить очки
+        for (int i =0; i<10; i++){ //проверка строки.
+            int k=0;
+            int string = 0;
+            for(int j= 0; j<10; j++){
+                Coordinate coordinate = new Coordinate(i,j);
+                if(colorSet.get(coordinate).equals(Color.WHITE))
+                    k=k +0;
+                else k=k+1;
+            }
+            if (k == 10){
+                string = i;
+                //вызов метода очистки строки.
+                //вызов метода увеличения очков
+            }
+        }
+    }
+
+    private void stringClear(int j){
+        for(int k=0; k<10;k++){
+            Coordinate coordinate = new Coordinate(j,k);
+            colorSet.remove(coordinate);
+            colorSet.put(coordinate,Color.WHITE);
+        }
+    }
+
+    private void columnClear(int j){
+        for(int k=0; k<10;k++){
+            Coordinate coordinate = new Coordinate(k,j);
+            colorSet.remove(coordinate);
+            colorSet.put(coordinate,Color.WHITE);
+        }
+    }
+
+    private void scoreGrowth(){
+        score = score + 10;
     }
 
     private void moveDownOnTimer() {
@@ -54,7 +83,10 @@ public class ModelImpl implements Model{
 
     private void spawnNewFigure() {
         //TODO: (17) здесь мы создаем новую рандомную фигуру, и если мы не можем это сделать, то игра закончена (выйти в меню, обновить рекорды)
+        FigureFactory factory = new FigureFactory();
+        Figure figure = factory.createFigure(FigureType.J);
     }
+
 
     @Override
     public void moveLeft() {

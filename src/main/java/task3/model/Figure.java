@@ -7,10 +7,10 @@ import java.util.Set;
 public class Figure {
     final int x;
     final int y;
-    final Set<Coordinate> elements;
+    final HashSet<Coordinate> elements;
     Color color;
 
-    public Figure(int x, int y, Set<Coordinate> elements) {
+    public Figure(int x, int y, HashSet<Coordinate> elements) {
         this.x = x;
         this.y = y;
         this.elements = elements;
@@ -34,7 +34,7 @@ public class Figure {
         return ans;
     }
 
-    public Set<Coordinate> getCoordinates(){
+    public HashSet<Coordinate> getCoordinates(){
         return elements;
     }
 

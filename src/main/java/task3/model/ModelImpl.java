@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.HashSet;
 
 public class ModelImpl implements Model{
     //TODO: (3) создать здесь все переменные которые определяют состояние модели:
@@ -77,9 +78,15 @@ public class ModelImpl implements Model{
         score = score + 10;
     }
 
-    private void moveDownOnTimer() {
+    private void moveDownOnTimer(Figure figure) {
         //TODO: (16) этот метод мы будем вызывать каждый раз когда фигура должна сместиться вниз по таймеру (раз в секунду например)
-        // соответсвенно если мы не можем этого сделать, значит фигура упала до конца и нужно создать новую фигуру методом spawnNewFigure
+        // соответсвенно если мы не можем этого сделать, значит фигура упала до конца и нужно создать новую фигуру методом
+        for (Coordinate coordinate : figure.getCoordinates()){
+            int x = coordinate.getX();
+            int y = coordinate.getY();
+            Color color = colorSet.get(new Coordinate(x+1,y+1));
+        }
+
     }
 
     private void spawnNewFigure() {

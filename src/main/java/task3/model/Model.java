@@ -12,5 +12,5 @@ public interface Model {
     void restart();
     List<Integer> highScore();
 
-    void setView(Viewer view);
+    void setView(View view);
 }

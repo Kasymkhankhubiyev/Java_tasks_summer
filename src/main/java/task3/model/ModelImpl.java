@@ -1,142 +1,160 @@
 package task3.model;
 
 import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
 
 public class ModelImpl implements Model{
-    //TODO: (3) создать здесь все переменные которые определяют состояние модели:
-    //  активна ли игра, текущая "падающая" фигура, координаты упавших ячеек, очки, список рекордов, экземпляр View, мб еще что-то
-    boolean gameIsRun; //если true - игра активна
-    int score;
-    Figure Figure;
-    Map<Coordinate, Color> colorSet;
-    Viewer view;
+    public static final int xSize = 20;
+    public static final int ySize = 20;
 
-    ModelImpl() { //создаем поле
-        gameIsRun = true;
-        for(int i =0; i< 10; i++) {
-            for (int k=0; k <= 10; k++) {
-                Coordinate cor = new Coordinate(i,k);
-                Color color = Color.WHITE;
-                colorSet.put(cor,color);
-            }
-        }
-        score = 0;
-    }
+    private boolean gameIsRun = false; //если true - игра активна
+    private int score = 0;
+    private Figure figure = null;
+    private Set<Coordinate> fallenElements = new HashSet<>();
+    private View view = null;
+    private List<Integer> highScore = new ArrayList<>();
+
+    //TODO: add timer with calls of .moveDownOnTimer()
 
     public void updateView() {
-        //TODO: (9) создать здесь класс ModelStateImpl а затем вызвать у экземпляра View медод updateView передав в него созданый ModelStateImpl
-        // самое сложное для создания ModelStateImpl - понять какие ячейки в какие цвета красить - нужно учесть как падующую фигуру так и лежащие на полу {}
-        // далее мы должны дергать этот метод каждый раз после того как меняем состояние модели, чтобы оно отрисовалось
-
-        // {а почему сложно понять? мы генерируем фигуру, она сразу меняет состояние игрового поля, т.е. для соответсвующей координаты меняем цвет}
-       ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun,score,colorSet);
-       View view = new Viewer();
-       view.updateView(modelStateImpl);
+        Set<Coordinate> elementSet = new HashSet<>();
+        elementSet.addAll(fallenElements);
+        elementSet.addAll(figure.getAbsoluteCoordinates());
+        ModelStateImpl modelStateImpl = new ModelStateImpl(gameIsRun, score, elementSet);
+        view.updateView(modelStateImpl);
     }
 
     private void checkCompleteRow() {
-        //TODO: (15) этот метод мы будем вызывать каждый раз когда нужно проверить заполненные полностью линии и удалить + начислить очки
-        for (int i =0; i<10; i++){ //проверка строки.
+        for (int i = 0; i < ySize; i++){ //проверка строки.
             int k=0;
-            int string = 0;
-            for(int j= 0; j<10; j++){
+            for(int j = 0; j < xSize; j++){
                 Coordinate coordinate = new Coordinate(i,j);
-                if(colorSet.get(coordinate).equals(Color.WHITE))
-                    k=k +0;
-                else k=k+1;
+                if(fallenElements.contains(coordinate)) k = k + 1;
             }
-            if (k == 10){
-                string = i;
-                stringClear(i);
+            if (k == xSize){
+                rowClear(i);
                 scoreGrowth();
             }
         }
-        //нужно ли очищать столбец?
     }
 
-    private void stringClear(int j){
-        for(int k=0; k<10;k++){
-            Coordinate coordinate = new Coordinate(j,k);
-            colorSet.remove(coordinate);
-            colorSet.put(coordinate,Color.WHITE);
-        }
-    }
-
-    private void columnClear(int j){
-        for(int k=0; k<10;k++){
-            Coordinate coordinate = new Coordinate(k,j);
-            colorSet.remove(coordinate);
-            colorSet.put(coordinate,Color.WHITE);
-        }
+    private void rowClear(int j){
+//        for(int k = 0; k < xSize; k++){
+//            Coordinate coordinate = new Coordinate(k, j);
+//            fallenElements.remove(coordinate);
+//        }
+        fallenElements.removeIf(coordinate -> coordinate.y == j);
+        Set<Coordinate> coords = new HashSet<>();
+        fallenElements.forEach(coordinate -> {if (coordinate.y < j) coords.add(coordinate);});
+        fallenElements.removeAll(coords);
+        coords.forEach(coordinate -> fallenElements.add(coordinate.moveDown()));
     }
 
     private void scoreGrowth(){
         score = score + 10;
     }
 
-    private void moveDownOnTimer(Figure figure) {
-        //TODO: (16) этот метод мы будем вызывать каждый раз когда фигура должна сместиться вниз по таймеру (раз в секунду например)
-        // соответсвенно если мы не можем этого сделать, значит фигура упала до конца и нужно создать новую фигуру методом
-        for (Coordinate coordinate : figure.getCoordinates()){
-            int x = coordinate.getX();
-            int y = coordinate.getY();
-            Color color = colorSet.get(new Coordinate(x+1,y+1));
+    private boolean checkFigurePlace(Figure figureToCheck) {
+        for(Coordinate coordinate : figureToCheck.getAbsoluteCoordinates()) {
+            if (coordinate.y < 0) return false;
+            if (coordinate.x < 0) return false;
+            if (coordinate.y >= ySize) return false;
+            if (coordinate.x >= xSize) return false;
+            if (fallenElements.contains(coordinate)) return false;
         }
+        return true;
+    }
 
+    private void moveDownOnTimer() {
+        Figure newFigure = figure.moveDown();
+        if (checkFigurePlace(newFigure)) {
+            figure = newFigure;
+        } else {
+            fallenElements.addAll(figure.getAbsoluteCoordinates());
+            checkCompleteRow();
+            spawnNewFigure();
+        }
+        updateView();
     }
 
     private void spawnNewFigure() {
-        //TODO: (17) здесь мы создаем новую рандомную фигуру, и если мы не можем это сделать, то игра закончена (выйти в меню, обновить рекорды)
-        FigureFactory factory = new FigureFactory();
-        Figure figure = factory.createFigure(FigureType.J);
+        Figure newFigure = FigureFactory.createFigure(FigureType.I);
+
+        if (checkFigurePlace(newFigure)) {
+            figure = newFigure;
+        } else {
+            looseGame();
+        }
+    }
+
+    private void looseGame() {
+        gameIsRun = false;
+        highScore.add(score);
+        highScore.sort(Comparator.comparingInt(value -> value));
     }
 
 
     @Override
     public void moveLeft() {
-        //TODO: (13) реализовать метод - нужно сдвинуть фигуру текущую влево в случае если мы можем это сделать (игра должна быть активна, нужные ячейки свободны)
-
+        Figure newFigure = figure.moveHorizontal(-1);
+        if (checkFigurePlace(newFigure)) {
+            figure = newFigure;
+            updateView();
+        }
     }
 
     @Override
     public void moveRight() {
-        //TODO: (14) реализовать метод аналогично moveLeft (стараться не дублировать код, вынести общее в какой-то дополнительный метод)
+        Figure newFigure = figure.moveHorizontal(1);
+        if (checkFigurePlace(newFigure)) {
+            figure = newFigure;
+            updateView();
+        }
     }
 
     @Override
     public void moveDown() {
-        //TODO: (18) эта команда "роняет" фигурку вниз до конца
+        Figure newFigure = figure;
+        while (checkFigurePlace(newFigure)) {
+            newFigure = newFigure.moveDown();
+        }
+        newFigure = newFigure.moveUp();
+        fallenElements.addAll(newFigure.getAbsoluteCoordinates());
+        checkCompleteRow();
+        spawnNewFigure();
+        updateView();
     }
 
     @Override
     public void rotate() {
-        //TODO: (19) поворот фигуры если возможно
+        Figure newFigure = figure.rotate();
+        if (checkFigurePlace(newFigure)) {
+            figure = newFigure;
+            updateView();
+        }
     }
 
     @Override
     public void endGame() {
-        //TODO: (12) реализовать метод - сделать игру сейчас неактивной (выйти в меню)
+        gameIsRun = false;
     }
 
     @Override
     public void restart() {
-        //TODO: (11) реализовать метод - нужно привести модель в состояние начала игры
+        score = 0;
+        gameIsRun = true;
+        fallenElements.clear();
+        spawnNewFigure();
     }
 
     @Override
     public List<Integer> highScore() {
-        //TODO: (10) реализовать метод
-        return null;
+        return highScore;
     }
 
     @Override
-    public void setView(Viewer view) {
-        //TODO: (8) реализовать метод - нужно "запомнить" переданный вью
+    public void setView(View view) {
         this.view = view;
-
     }
 }

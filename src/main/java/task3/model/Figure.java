@@ -7,10 +7,9 @@ import java.util.Set;
 public class Figure {
     final int x;
     final int y;
-    final HashSet<Coordinate> elements;
-    Color color;
+    final Set<Coordinate> elements;
 
-    public Figure(int x, int y, HashSet<Coordinate> elements) {
+    public Figure(int x, int y, Set<Coordinate> elements) {
         this.x = x;
         this.y = y;
         this.elements = elements;
@@ -20,8 +19,17 @@ public class Figure {
         return new Figure(x, y + 1, elements);
     }
 
+    public Figure moveUp(){
+        return new Figure(x, y - 1, elements);
+    }
+
     public Figure moveHorizontal(int dx){
         return new Figure(x + dx, y, elements);
+    }
+
+    public Figure rotate(){
+        //TODO rotate figure
+        return this;
     }
 
     public Set<Coordinate> getAbsoluteCoordinates() {
@@ -34,11 +42,7 @@ public class Figure {
         return ans;
     }
 
-    public HashSet<Coordinate> getCoordinates(){
+    public Set<Coordinate> getCoordinates(){
         return elements;
-    }
-
-    public Color getColor(){
-        return color;
     }
 }

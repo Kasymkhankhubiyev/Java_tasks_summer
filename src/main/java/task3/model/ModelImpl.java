@@ -18,8 +18,25 @@ public class ModelImpl implements Model{
     private List<Integer> highScore = new ArrayList<>();
 
     //TODO: add timer with calls of .moveDownOnTimer()
-    private Timer timer;
-    private TimerTask timerTask;
+    private Timer timer = new Timer();
+    private TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() { //что делать с run()?
+            Figure newFigure = figure;
+            figure = newFigure.moveDown();
+            if (checkFigurePlace(newFigure)) {
+                figure = newFigure;
+            } else {
+                fallenElements.addAll(figure.getAbsoluteCoordinates());
+                checkCompleteRow();
+                spawnNewFigure();
+            }
+        }
+    };
+
+    public void timerMover(){
+    
+    }
 
     public void updateView() {
         Set<Coordinate> elementSet = new HashSet<>();
@@ -71,14 +88,14 @@ public class ModelImpl implements Model{
     }
 
     private void moveDownOnTimer() {
-        Figure newFigure = figure.moveDown();
-        if (checkFigurePlace(newFigure)) {
-            figure = newFigure;
-        } else {
-            fallenElements.addAll(figure.getAbsoluteCoordinates());
-            checkCompleteRow();
-            spawnNewFigure();
-        }
+        timer.scheduleAtFixedRate(timerTask,0,1000);
+//        if (checkFigurePlace(newFigure)) {
+//            figure = newFigure;
+//        } else {
+//            fallenElements.addAll(figure.getAbsoluteCoordinates());
+//            checkCompleteRow();
+//            spawnNewFigure();
+//        }
         updateView();
     }
 

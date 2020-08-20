@@ -3,6 +3,8 @@ package task3.model;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ModelImpl implements Model{
     public static final int xSize = 20;
@@ -16,6 +18,8 @@ public class ModelImpl implements Model{
     private List<Integer> highScore = new ArrayList<>();
 
     //TODO: add timer with calls of .moveDownOnTimer()
+    private Timer timer;
+    private TimerTask timerTask;
 
     public void updateView() {
         Set<Coordinate> elementSet = new HashSet<>();

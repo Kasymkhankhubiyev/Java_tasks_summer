@@ -34,10 +34,6 @@ public class ModelImpl implements Model{
         }
     };
 
-    public void timerMover(){
-    
-    }
-
     public void updateView() {
         Set<Coordinate> elementSet = new HashSet<>();
         elementSet.addAll(fallenElements);

@@ -32,6 +32,16 @@ public class Figure {
     public Figure rotate(){
         //TODO rotate figure
         //основная точка (0.0)
+        switch (type){
+            case Z:
+            case S:
+            case T:
+            case O:
+            case J:
+            case I:
+            case L:
+        }
+
         return this;
     }
 

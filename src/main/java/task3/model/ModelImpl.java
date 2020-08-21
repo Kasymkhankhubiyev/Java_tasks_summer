@@ -154,6 +154,7 @@ public class ModelImpl implements Model{
 
     @Override
     public void endGame() {
+        timer.cancel();
         gameIsRun = false;
     }
 

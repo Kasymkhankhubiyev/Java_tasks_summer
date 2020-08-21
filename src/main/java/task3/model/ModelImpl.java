@@ -21,17 +21,7 @@ public class ModelImpl implements Model{
     //TODO: add timer with calls of .moveDownOnTimer()
     private TimerTask timerTask = new TimerTask() {
         @Override
-        public void run() { //что делать с run()?
-            Figure newFigure = figure;
-            figure = newFigure.moveDown();
-            if (checkFigurePlace(newFigure)) {
-                figure = newFigure;
-            } else {
-                fallenElements.addAll(figure.getAbsoluteCoordinates());
-                checkCompleteRow();
-                spawnNewFigure();
-            }
-        }
+        public void run() {moveDownOnTimer();}
     };
 
     public void updateView() {
@@ -84,14 +74,14 @@ public class ModelImpl implements Model{
     }
 
     private void moveDownOnTimer() {
-        timer.scheduleAtFixedRate(timerTask,0,1000);
-//        if (checkFigurePlace(newFigure)) {
-//            figure = newFigure;
-//        } else {
-//            fallenElements.addAll(figure.getAbsoluteCoordinates());
-//            checkCompleteRow();
-//            spawnNewFigure();
-//        }
+        Figure newFigure = figure.moveDown();
+        if (checkFigurePlace(newFigure)) {
+            figure = newFigure;
+        } else {
+            fallenElements.addAll(figure.getAbsoluteCoordinates());
+            checkCompleteRow();
+            spawnNewFigure();
+        }
         updateView();
     }
 
@@ -106,6 +96,7 @@ public class ModelImpl implements Model{
     }
 
     private void looseGame() {
+        timer.cancel();
         gameIsRun = false;
         highScore.add(score);
         highScore.sort(Comparator.comparingInt(value -> value));
@@ -164,8 +155,9 @@ public class ModelImpl implements Model{
         gameIsRun = true;
         fallenElements.clear();
         spawnNewFigure();
-        timer = new Timer();
         updateView();
+        timer = new Timer(true);
+        timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 
     @Override

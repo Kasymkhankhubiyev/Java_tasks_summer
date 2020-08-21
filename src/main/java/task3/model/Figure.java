@@ -8,23 +8,25 @@ public class Figure {
     final int x;
     final int y;
     final Set<Coordinate> elements;
+    final FigureType type;
 
-    public Figure(int x, int y, Set<Coordinate> elements) {
+    public Figure(int x, int y, Set<Coordinate> elements, FigureType type) {
         this.x = x;
         this.y = y;
         this.elements = elements;
+        this.type=type;
     }
 
     public Figure moveDown(){
-        return new Figure(x, y + 1, elements);
+        return new Figure(x, y + 1, elements,type);
     }
 
     public Figure moveUp(){
-        return new Figure(x, y - 1, elements);
+        return new Figure(x, y - 1, elements, type);
     }
 
     public Figure moveHorizontal(int dx){
-        return new Figure(x + dx, y, elements);
+        return new Figure(x + dx, y, elements, type);
     }
 
     public Figure rotate(){

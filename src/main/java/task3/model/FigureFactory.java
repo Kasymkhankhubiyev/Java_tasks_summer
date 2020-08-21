@@ -41,7 +41,7 @@ public class FigureFactory {
             default:
                 throw new RuntimeException("Figure type not supported");
         }
-        return new Figure(0, 0, elements);
+        return new Figure(0, 0, elements,figureType);
     }
 }
 

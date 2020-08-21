@@ -16,9 +16,9 @@ public class ModelImpl implements Model{
     private Set<Coordinate> fallenElements = new HashSet<>();
     private View view = null;
     private List<Integer> highScore = new ArrayList<>();
+    private Timer timer;
 
     //TODO: add timer with calls of .moveDownOnTimer()
-    private Timer timer = new Timer();
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() { //что делать с run()?
@@ -163,6 +163,7 @@ public class ModelImpl implements Model{
         gameIsRun = true;
         fallenElements.clear();
         spawnNewFigure();
+        timer = new Timer();
     }
 
     @Override

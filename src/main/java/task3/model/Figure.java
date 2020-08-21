@@ -29,6 +29,7 @@ public class Figure {
 
     public Figure rotate(){
         //TODO rotate figure
+        //основная точка (0.0)
         return this;
     }
 

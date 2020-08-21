@@ -164,6 +164,7 @@ public class ModelImpl implements Model{
         fallenElements.clear();
         spawnNewFigure();
         timer = new Timer();
+        updateView();
     }
 
     @Override

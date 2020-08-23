@@ -1,7 +1,5 @@
 package task3.model;
 
-import java.awt.*;
-import java.util.Map;
 import java.util.Set;
 
 public class ModelStateImpl implements ModelState{

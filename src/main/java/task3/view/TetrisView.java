@@ -20,7 +20,7 @@ public class TetrisView implements View {
     public TetrisView(Model model) {
         this.model = model;
         fieldScreen = new FieldScreen(this);
-        frame.setPreferredSize(new Dimension(400, 700));
+        frame.setPreferredSize(new Dimension(400, 750));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setContentPane(root);
         frame.setResizable(false);
@@ -30,9 +30,11 @@ public class TetrisView implements View {
 
     @Override
     public void updateView(ModelState modelState) {
-        fieldScreen.refreshModelState(modelState);
-        root.revalidate();
-        root.repaint();
+        SwingUtilities.invokeLater(() -> {
+            fieldScreen.refreshModelState(modelState);
+            root.revalidate();
+            root.repaint();
+        });
     }
 
     public void start(){

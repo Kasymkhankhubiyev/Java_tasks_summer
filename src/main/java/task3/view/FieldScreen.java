@@ -5,9 +5,9 @@ import task3.model.ModelState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedWriter;
 
 public class FieldScreen extends AbstractScreen {
     private static final Color COLOR_OFF = Color.white;
@@ -22,6 +22,7 @@ public class FieldScreen extends AbstractScreen {
     private final Model model;
     private final int xSize;
     private final int ySize;
+    private boolean isDialogShown = false;
 
     public FieldScreen(TetrisView tetrisView) {
         super(tetrisView);
@@ -48,6 +49,8 @@ public class FieldScreen extends AbstractScreen {
             }
         }
 
+        add(scoreCaption);
+        add(scoreLabel);
         add(field);
         add(toMenuButton);
         toMenuButton.setFocusable(false);
@@ -94,6 +97,12 @@ public class FieldScreen extends AbstractScreen {
                 else
                     cells[x][y].setBackground(COLOR_OFF);
             }
+        }
+        if (!modelState.isGameActive() && !isDialogShown) {
+            isDialogShown = true;
+            JOptionPane.showConfirmDialog(tetrisView.frame,"GAME OVER. SCORE:" + modelState.getScore(), "Game over", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            tetrisView.showMenu();
+            isDialogShown = false;
         }
     }
 }

@@ -18,7 +18,5 @@ public class AboutScreen extends AbstractScreen {
 
     @Override
     protected void refresh(Model model) {
-        revalidate();
-        repaint();
     }
 }

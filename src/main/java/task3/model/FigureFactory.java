@@ -31,20 +31,20 @@ public class FigureFactory {
             case T:
                 for (int i = 0; i < 3; i++) elements.add(new Coordinate(i, 0));
                 elements.add(new Coordinate(1, 1));
-                rotationPoint = new Coordinate(1, 0);
+                rotationPoint = new Coordinate(1, 1);
                 break;
             case S:
-                elements.add(new Coordinate(0, 2));
                 elements.add(new Coordinate(0, 1));
+                elements.add(new Coordinate(0, 2));
+                elements.add(new Coordinate(1, 0));
                 elements.add(new Coordinate(1, 1));
-                elements.add(new Coordinate(2, 0));
                 rotationPoint = new Coordinate(1, 0);
                 break;
             case Z:
                 elements.add(new Coordinate(0, 0));
                 elements.add(new Coordinate(0, 1));
                 elements.add(new Coordinate(1, 1));
-                elements.add(new Coordinate(0, 2));
+                elements.add(new Coordinate(1, 2));
                 rotationPoint = new Coordinate(1, 0);
                 break;
 

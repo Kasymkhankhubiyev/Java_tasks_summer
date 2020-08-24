@@ -3,7 +3,6 @@ package task3.view;
 import task3.model.Model;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class AbstractScreen extends JPanel {
     protected final TetrisView tetrisView;

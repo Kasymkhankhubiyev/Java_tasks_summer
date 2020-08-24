@@ -33,14 +33,14 @@ public class ModelImpl implements Model{
     }
 
     private void checkCompleteRow() {
-        for (int i = 0; i < ySize; i++){ //проверка строки.
+        for (int y = 0; y < ySize; y++){ //проверка строки.
             int k=0;
-            for(int j = 0; j < xSize; j++){
-                Coordinate coordinate = new Coordinate(i,j);
+            for(int x = 0; x < xSize; x++){
+                Coordinate coordinate = new Coordinate(x, y);
                 if(fallenElements.contains(coordinate)) k = k + 1;
             }
             if (k == xSize){
-                rowClear(i);
+                rowClear(y);
                 scoreGrowth();
             }
         }
@@ -74,15 +74,17 @@ public class ModelImpl implements Model{
     }
 
     private void moveDownOnTimer() {
-        Figure newFigure = figure.moveDown();
-        if (checkFigurePlace(newFigure)) {
-            figure = newFigure;
-        } else {
-            fallenElements.addAll(figure.getAbsoluteCoordinates());
-            checkCompleteRow();
-            spawnNewFigure();
+        if (gameIsRun) {
+            Figure newFigure = figure.moveDown();
+            if (checkFigurePlace(newFigure)) {
+                figure = newFigure;
+            } else {
+                fallenElements.addAll(figure.getAbsoluteCoordinates());
+                checkCompleteRow();
+                spawnNewFigure();
+            }
+            updateView();
         }
-        updateView();
     }
 
     private void spawnNewFigure() {
@@ -120,6 +122,7 @@ public class ModelImpl implements Model{
         gameIsRun = false;
         highScore.add(score);
         highScore.sort(Comparator.comparingInt(value -> value));
+        updateView();
     }
 
 
@@ -135,41 +138,49 @@ public class ModelImpl implements Model{
 
     @Override
     public void moveLeft() {
-        Figure newFigure = figure.moveHorizontal(-1);
-        if (checkFigurePlace(newFigure)) {
-            figure = newFigure;
-            updateView();
+        if (gameIsRun) {
+            Figure newFigure = figure.moveHorizontal(-1);
+            if (checkFigurePlace(newFigure)) {
+                figure = newFigure;
+                updateView();
+            }
         }
     }
 
     @Override
     public void moveRight() {
-        Figure newFigure = figure.moveHorizontal(1);
-        if (checkFigurePlace(newFigure)) {
-            figure = newFigure;
-            updateView();
+        if (gameIsRun) {
+            Figure newFigure = figure.moveHorizontal(1);
+            if (checkFigurePlace(newFigure)) {
+                figure = newFigure;
+                updateView();
+            }
         }
     }
 
     @Override
     public void moveDown() {
-        Figure newFigure = figure;
-        while (checkFigurePlace(newFigure)) {
-            newFigure = newFigure.moveDown();
+        if (gameIsRun) {
+            Figure newFigure = figure;
+            while (checkFigurePlace(newFigure)) {
+                newFigure = newFigure.moveDown();
+            }
+            newFigure = newFigure.moveUp();
+            fallenElements.addAll(newFigure.getAbsoluteCoordinates());
+            checkCompleteRow();
+            spawnNewFigure();
+            updateView();
         }
-        newFigure = newFigure.moveUp();
-        fallenElements.addAll(newFigure.getAbsoluteCoordinates());
-        checkCompleteRow();
-        spawnNewFigure();
-        updateView();
     }
 
     @Override
     public void rotate() {
-        Figure newFigure = figure.rotate();
-        if (checkFigurePlace(newFigure)) {
-            figure = newFigure;
-            updateView();
+        if (gameIsRun) {
+            Figure newFigure = figure.rotate();
+            if (checkFigurePlace(newFigure)) {
+                figure = newFigure;
+                updateView();
+            }
         }
     }
 

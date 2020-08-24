@@ -43,7 +43,7 @@ public class FigureFactory {
             case Z:
                 elements.add(new Coordinate(0, 0));
                 for (int i = 0; i <= 1; i++) elements.add(new Coordinate(1, i));
-                elements.add(new Coordinate(2, 2));
+                elements.add(new Coordinate(0, 2));
                 rotationPoint = new Coordinate(1, 0);
                 break;
 

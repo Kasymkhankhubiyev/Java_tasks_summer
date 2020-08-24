@@ -21,7 +21,9 @@ public class Coordinate {
     }
 
     public Coordinate rotate(Coordinate point) {
-        return null;
+        int dx = x - point.x;
+        int dy = y - point.y;
+        return new Coordinate(point.x - dy, point.y + dx);
     }
 
     public Coordinate move(int dx,int dy) {

@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ModelImpl implements Model{
-    public static final int xSize = 20;
+    public static final int xSize = 10;
     public static final int ySize = 20;
 
     private boolean gameIsRun = false; //если true - игра активна
@@ -16,7 +16,7 @@ public class ModelImpl implements Model{
     private Set<Coordinate> fallenElements = new HashSet<>();
     private View view = null;
     private List<Integer> highScore = new ArrayList<>();
-    private Timer timer;
+    private Timer timer = new Timer(true);
 
     //TODO: add timer with calls of .moveDownOnTimer()
     private TimerTask timerTask = new TimerTask() {
@@ -86,7 +86,27 @@ public class ModelImpl implements Model{
     }
 
     private void spawnNewFigure() {
-        Figure newFigure = FigureFactory.createFigure(FigureType.I);
+        int randomNumber = new Random().nextInt(7);
+        FigureType randomFigureType;
+        switch (randomNumber) {
+            case 0: randomFigureType = FigureType.I;
+            break;
+            case 1: randomFigureType = FigureType.J;
+                break;
+            case 2: randomFigureType = FigureType.L;
+                break;
+            case 3: randomFigureType = FigureType.O;
+                break;
+            case 4: randomFigureType = FigureType.S;
+                break;
+            case 5: randomFigureType = FigureType.T;
+                break;
+            case 6: randomFigureType = FigureType.Z;
+                break;
+            default:
+                throw new RuntimeException("Unknown figure number");
+        }
+        Figure newFigure = FigureFactory.createFigure(randomFigureType);
 
         if (checkFigurePlace(newFigure)) {
             figure = newFigure;
@@ -102,6 +122,16 @@ public class ModelImpl implements Model{
         highScore.sort(Comparator.comparingInt(value -> value));
     }
 
+
+    @Override
+    public int xSize() {
+        return xSize;
+    }
+
+    @Override
+    public int ySize() {
+        return ySize;
+    }
 
     @Override
     public void moveLeft() {
@@ -156,7 +186,12 @@ public class ModelImpl implements Model{
         fallenElements.clear();
         spawnNewFigure();
         updateView();
+        if (timer != null) timer.cancel();
         timer = new Timer(true);
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {moveDownOnTimer();}
+        };
         timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 

@@ -9,32 +9,69 @@ import java.awt.*;
 
 public class TetrisView implements View {
     private final Model model;
-    private final JFrame frame = new JFrame("Tetris");
+    final JFrame frame = new JFrame("Tetris");
     private final JPanel root = new JPanel();
-    private final JLabel label = new JLabel("AAABBB");
 
+    private final AboutScreen aboutScreen = new AboutScreen(this);
+    private final FieldScreen fieldScreen;
+    private final HighScoresScreen highScoresScreen = new HighScoresScreen(this);
+    private final MenuScreen menuScreen = new MenuScreen(this);
 
     public TetrisView(Model model) {
-        init();
         this.model = model;
-        model.setView(this);
-    }
-
-    private void init(){
-        frame.setPreferredSize(new Dimension(400, 600));
+        fieldScreen = new FieldScreen(this);
+        frame.setPreferredSize(new Dimension(400, 700));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(root);
-
-        root.add(label);
+        frame.setContentPane(root);
+        frame.setResizable(false);
+        model.setView(this);
+        root.add(menuScreen);
     }
 
     @Override
     public void updateView(ModelState modelState) {
-
+        fieldScreen.refreshModelState(modelState);
+        root.revalidate();
+        root.repaint();
     }
 
     public void start(){
         frame.pack();
         frame.setVisible(true);
+    }
+
+    protected void showMenu(){
+        model.endGame();
+        changeScreen(menuScreen);
+    }
+
+    protected void showField(){
+        changeScreen(fieldScreen);
+        model.restart();
+    }
+
+    protected void showHighScores(){
+        changeScreen(highScoresScreen);
+    }
+
+    protected void showAbout(){
+        changeScreen(aboutScreen);
+    }
+
+    protected void exit(){
+        model.endGame();
+        frame.dispose();
+    }
+
+    private void changeScreen(AbstractScreen screen) {
+        root.removeAll();
+        root.add(screen);
+        screen.refresh(model);
+        root.revalidate();
+        root.repaint();
+    }
+
+    protected Model getModel(){
+        return model;
     }
 }

@@ -20,7 +20,7 @@ public class FigureFactory {
                 break;
             case J:
                 for (int i = 0; i < 3; i++) elements.add(new Coordinate(i, 1));
-                elements.add(new Coordinate(3, 0));
+                elements.add(new Coordinate(2, 0));
                 rotationPoint = new Coordinate(1, 0);
                 break;
             case O:
@@ -34,8 +34,9 @@ public class FigureFactory {
                 rotationPoint = new Coordinate(1, 0);
                 break;
             case S:
-                elements.add(new Coordinate(2, 0));
-                for (int i = 0; i <= 2; i++) elements.add(new Coordinate(1, i));
+                elements.add(new Coordinate(0, 0));
+                elements.add(new Coordinate(0, 1));
+                elements.add(new Coordinate(1, 1));
                 elements.add(new Coordinate(0, 2));
                 rotationPoint = new Coordinate(1, 0);
                 break;

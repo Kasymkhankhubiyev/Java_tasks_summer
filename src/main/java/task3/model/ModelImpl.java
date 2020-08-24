@@ -7,7 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ModelImpl implements Model{
-    public static final int xSize = 20;
+    public static final int xSize = 10;
     public static final int ySize = 20;
 
     private boolean gameIsRun = false; //если true - игра активна
@@ -16,7 +16,7 @@ public class ModelImpl implements Model{
     private Set<Coordinate> fallenElements = new HashSet<>();
     private View view = null;
     private List<Integer> highScore = new ArrayList<>();
-    private Timer timer;
+    private Timer timer = new Timer(true);
 
     //TODO: add timer with calls of .moveDownOnTimer()
     private TimerTask timerTask = new TimerTask() {
@@ -188,6 +188,10 @@ public class ModelImpl implements Model{
         updateView();
         if (timer != null) timer.cancel();
         timer = new Timer(true);
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {moveDownOnTimer();}
+        };
         timer.scheduleAtFixedRate(timerTask, 1000, 1000);
     }
 

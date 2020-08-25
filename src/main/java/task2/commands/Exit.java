@@ -9,10 +9,6 @@ import java.util.List;
 public class Exit implements Command {
     @Override
     public void execute(Context context, List<String> args) throws CommandException {
-        try{
-            context.setExit();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        context.setExit();
     }
 }

@@ -9,12 +9,19 @@ import java.util.List;
 public class Push implements Command {
     @Override
     public void execute(Context context, List<String> args) throws CommandException {
-        try {
-            //Double value = Double.valueOf(args.get(0));
+        if (args.isEmpty()) throw new CommandException("No arguments");
+        Double number = null;
 
-            context.getStack().push(context.getConstants().get(args.get(0)));
-        } catch (Exception e) {
-            throw new CommandException("First argument should be a number");
-        }
+        try {
+            number = Double.valueOf(args.get(0));
+        } catch (Exception ignored){}
+
+        if (number == null)
+            number = context.getConstants().get(args.get(0));
+
+        if (number != null)
+            context.getStack().push(number);
+        else
+            throw new CommandException("First argument should be a number or a known constant");
     }
 }

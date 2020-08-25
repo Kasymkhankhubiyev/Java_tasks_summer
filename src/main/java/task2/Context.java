@@ -12,7 +12,7 @@ public class Context {
     private Writer writer;
     private Boolean exitCondition;
 
-    Context(Writer writer) {
+    public Context(Writer writer) {
         this.writer = writer;
         exitCondition = false;
     }

@@ -12,12 +12,10 @@ public class Div implements Command {
         if(context.getStack().size() < 2)
             throw new CommandException("There should be at least 2 values in the stack");
 
+        if (context.getStack().peek() == 0) throw new CommandException("Division by zero");
+
         double b = context.getStack().pop();//два самых верхних из стека
         double a = context.getStack().pop();
-
-        if(b != 0d)
-            context.getStack().push(a / b);
-        else
-            throw new CommandException("Division by zero");
+        context.getStack().push(a / b);
     }
 }

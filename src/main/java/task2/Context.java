@@ -8,7 +8,6 @@ import java.util.Stack;
 
 public class Context {
     private Stack<Double> stack = new Stack<>(); //здесь дабл так как в стэке у нас только числа могут быть
-    // private String[] comList= null;   это нам не нужно
     private Map<String, Double> constants = new HashMap<>(); // здесь мы храним наши константы, работать с ними будем через getConstants().push() и getConstants().get()
     private Writer writer;
     private Boolean exitCondition;

@@ -9,23 +9,14 @@ import java.util.List;
 public class Sqrt implements Command {
     @Override
     public void execute(Context context, List<String> args) throws CommandException {
-        try{
+            if(context.getStack().size() < 1)
+                throw new CommandException("There should be at least 1 value in the stack");
+
             double a = context.getStack().pop();// самый верхних из стека
 
-            if(context.getStack().size()<1)
-                throw new CommandException("There should be at least 2 values in the stack");
-
-
-            if(a>0){
-                //context.getConstants().put("const", Math.sqrt(a));
-                context.getStack().push(a);
+            if(a > 0){
+                context.getStack().push(Math.sqrt(a));
             }else
                 throw new CommandException("Variable is negative, sqrt can't be done");
-
-        }catch (CommandException ce){
-            throw ce;
-        }catch(Exception e){
-            throw new CommandException("Variables not found");
-        }
     }
 }

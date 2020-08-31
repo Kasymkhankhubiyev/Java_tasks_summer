@@ -1,12 +1,14 @@
 package task5.messages;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.Objects;
 
 public class RegisterClient implements ClientMessage{
     public final String userName;
     public final String chatClientName;
 
-    public RegisterClient(String userName, String chatClientName) {
+    public RegisterClient(String userName, String chatClientName) throws IOException {
         this.userName = userName;
         this.chatClientName = chatClientName;
     }

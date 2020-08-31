@@ -1,49 +1,65 @@
 package task5.server;
 
-import task5.client.Client;
-import task5.messages.*;
+import task5.messages.ClientMessage;
+import task5.messages.ServerMessage;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class ServerConnections {
-    private final MessageEncoder messageEncoder;
-    private final Map<String, Socket> Sockets = new HashMap<>();
-    private final Map<String, String> ClientMap = new HashMap();
+    private final int port;
+    private final Map<String, ConnectionToClient> connections = new HashMap<>();
+    private ServerSocket serverSocket;
+    private ServerSocketListener serverSocketListener;
+    private final ServerLogic serverLogic;
 
-    Socket socket = new Socket("127.0.0.1", 6666);
+    public ServerConnections(int port, ServerLogic serverLogic){
+        this.port = port;
+        this.serverLogic = serverLogic;
+    }
+
     public String generateSessionId(){ return UUID.randomUUID().toString();}
-    private final ServerSocket serverSocket = new ServerSocket(6666);
 
-    public void addSockets(){
-        Sockets.put(generateSessionId(),socket);
-    }
-
-    public void addClient(String clientName, String sessionID){
-        ClientMap.put(clientName,sessionID);
+    public void processNewSocket(Socket socket){
+        //TODO: обработка нового сокета который открывает ServerSocketListener
+        // здесь нудно создать новый sessionId, новый ConnectionToClient
+        // положить ConnectionToClient в Map
     }
 
-    public String getSessionID(String clientName){
-        return ClientMap.get(clientName);
+    public void processMessageFromClient(String sessionId, ClientMessage message){
+        //TODO: здесь нужно обработать сообщение от конкретного клиента (сообщение попадает сюда из ConnectionToClient)
+        // по сути его нужно просто транслировать в serverLogic так как обработка делается там
     }
 
-    public void deleteClient(String clientName){
-        ClientMap.remove(clientName);
-    }
-    public Map<String, Socket> getClientSockets() {
-        return Sockets;
+    public void closeConnection(String sessionId){
+        //TODO: закрытие клиентского подключения (ConnectionToClient) и удаление его из connections
     }
 
-    public Socket getSocket(String sessionID){
-        return Sockets.get(sessionID);
+    public void sendMessageToClient(String sessionId, ServerMessage serverMessage){
+        //TODO: отправка сообщения конкретному клиенту
     }
 
-    public ServerConnections(MessageEncoder messageEncoder) throws IOException {
-        this.messageEncoder = messageEncoder;
+    public void sendMessageToAllClients(ServerMessage serverMessage){
+        //TODO: отправка сообщения всем клиентам
     }
+
+    public void openSocket() throws IOException {
+        //инициализация вынесена в отдельный метод потому что нам нужно сначала создать все компоненты (Connections, Logic)
+        //связать их друг с другом и только потом открывать сокет, иначе если придет подключение пока все это не готово
+        //будет проблема (см ServerMain.main)
+
+        serverSocket = new ServerSocket(port);
+        serverSocketListener = new ServerSocketListener(serverSocket, this);
+        new Thread(serverSocketListener).start(); //запуск потока который слушает новые подключения
+    }
+
+    public void close() throws IOException {
+        serverSocket.close();
+        connections.values().forEach(connectionToClient -> connectionToClient.close());
+    }
+
 }

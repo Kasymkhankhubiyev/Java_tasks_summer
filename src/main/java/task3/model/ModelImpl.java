@@ -18,7 +18,6 @@ public class ModelImpl implements Model{
     private List<Integer> highScore = new ArrayList<>();
     private Timer timer = new Timer(true);
 
-    //TODO: add timer with calls of .moveDownOnTimer()
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {moveDownOnTimer();}

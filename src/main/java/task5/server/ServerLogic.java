@@ -1,5 +1,6 @@
 package task5.server;
 
+import task5.client.Client;
 import task5.messages.*;
 
 import java.util.*;
@@ -18,6 +19,8 @@ public class ServerLogic {
             return new ServerErrorAnswer("This name is already in use");
         String sessionId = UUID.randomUUID().toString();
         connectedUsers.put(sessionId, registerClient.chatClientName);
+        Client client = new Client(registerClient.userName, registerClient.chatClientName, sessionId);
+        serverConnections.addClient(registerClient.userName, sessionId);
         return new ClientRegistered(sessionId);
     }
 
@@ -31,7 +34,10 @@ public class ServerLogic {
         }
     }
 
-    public SendMessage unregisterClient(ClientMessage clientMessage){
-        return null;
+    public ServerMessage unregisterClient(RegisterClient registerClient){
+        String sessionID = serverConnections.getSessionID(registerClient.userName);
+        connectedUsers.remove(sessionID);
+        serverConnections.deleteClient(registerClient.userName);
+        return new ClientDeleted(sessionID);
     }
 }

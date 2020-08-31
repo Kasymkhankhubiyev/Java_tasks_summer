@@ -13,9 +13,10 @@ public class ServerLogic {
         this.serverConnections = serverConnections;
     }
 
-    public ServerMessage registerClient(RegisterClient registerClient, String sessionId) {
+    public ServerMessage registerClient(RegisterClient registerClient) {
         if (connectedUsers.containsValue(registerClient.chatClientName))
             return new ServerErrorAnswer("This name is already in use");
+        String sessionId = UUID.randomUUID().toString();
         connectedUsers.put(sessionId, registerClient.chatClientName);
         return new ClientRegistered(sessionId);
     }

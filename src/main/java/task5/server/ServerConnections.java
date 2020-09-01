@@ -53,14 +53,13 @@ public class ServerConnections {
 
     public void sendMessageToAllClients(ServerMessage serverMessage){
         //TODO: отправка сообщения всем клиентам
-        connections.forEach(connectionToClient -> connections.get());
+        connections.forEach((s, connectionToClient) -> connections.get(s).sendMessage(serverMessage));
     }
 
     public void openSocket() throws IOException {
         //инициализация вынесена в отдельный метод потому что нам нужно сначала создать все компоненты (Connections, Logic)
         //связать их друг с другом и только потом открывать сокет, иначе если придет подключение пока все это не готово
         //будет проблема (см ServerMain.main)
-
         serverSocket = new ServerSocket(port);
         serverSocketListener = new ServerSocketListener(serverSocket, this);
         new Thread(serverSocketListener).start(); //запуск потока который слушает новые подключения

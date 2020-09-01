@@ -27,6 +27,9 @@ public class ConnectionToClient{
                 // когда сокет будет закрыт - здесь сгенерится эксепшен, и этот поток должен закончиться
                 // но перед тем как он закончится он должен уведомить ServerConnections об этом
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+                while(true){
+
+                }
 
 
             } catch (IOException ignored) {

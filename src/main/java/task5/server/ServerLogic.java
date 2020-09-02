@@ -23,6 +23,8 @@ public class ServerLogic {
     public void registerClient(String sessionId, RegisterClient registerClient) {
         //TODO: этот код нужно немного переписать, здесь поменялась сигнатура метода
         // Нужно ответить клиентам через serverConnection.sendMessageToClient (или его версию для всех)
+        //if (connectedUsers.containsValue(registerClient.chatClientName))
+          //  serverConnections.sendMessageToClient(connectedUsers.);
 //        if (connectedUsers.containsValue(registerClient.chatClientName))
 //            return new ServerErrorAnswer("This name is already in use");
 //        String sessionId = UUID.randomUUID().toString();

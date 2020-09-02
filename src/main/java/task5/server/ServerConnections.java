@@ -48,7 +48,9 @@ public class ServerConnections {
 
     public void sendMessageToClient(String sessionId, ServerMessage serverMessage){
         //TODO: отправка сообщения конкретному клиенту
+        if(connections.get(sessionId)!=null)
         connections.get(sessionId).sendMessage(serverMessage);
+        else System.out.println("wrong session ID");
     }
 
     public void sendMessageToAllClients(ServerMessage serverMessage){

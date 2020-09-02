@@ -1,5 +1,6 @@
 package task5.server;
 
+import task5.messages.ClientMessage;
 import task5.messages.ServerMessage;
 
 import java.io.IOException;
@@ -15,7 +16,6 @@ public class ConnectionToClient{
         this.sessionId = sessionId;
         this.socket = socket;
         this.serverConnections = serverConnections;
-        new Thread(runnable()).start(); // запуск потока который слушает клиента
     }
 
     private Runnable runnable() {
@@ -28,17 +28,28 @@ public class ConnectionToClient{
                 // но перед тем как он закончится он должен уведомить ServerConnections об этом
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 while(true){
-
+                    try {
+                        Object object = objectInputStream.readObject();
+                        if (object instanceof ClientMessage){
+                            ClientMessage clientMessage = (ClientMessage) object;
+                            serverConnections.processMessageFromClient(sessionId, clientMessage);
+                        }
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-
             } catch (IOException ignored) {
             }
+            serverConnections.closeConnection(sessionId);
         };
     }
 
     public void sendMessage(ServerMessage serverMessage){
         //TODO: отправка сообщения клиенту
+    }
+
+    public void start(){
+        new Thread(runnable()).start(); // запуск потока который слушает клиента
     }
 
     public void close(){

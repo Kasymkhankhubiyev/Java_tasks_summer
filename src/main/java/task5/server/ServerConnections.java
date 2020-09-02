@@ -24,38 +24,35 @@ public class ServerConnections {
 
     public String generateSessionId(){ return UUID.randomUUID().toString();}
 
-    public void processNewSocket(Socket socket){
-        //TODO: обработка нового сокета который открывает ServerSocketListener
-        // здесь нудно создать новый sessionId, новый ConnectionToClient
-        // положить ConnectionToClient в Map
+    public synchronized void processNewSocket(Socket socket){
         String sessionID = generateSessionId();
         ConnectionToClient connectionToClient = new ConnectionToClient(sessionID, socket, this);
         connections.put(sessionID, connectionToClient);
+        connectionToClient.start();
     }
 
     public void processMessageFromClient(String sessionId, ClientMessage message){
-        //TODO: здесь нужно обработать сообщение от конкретного клиента (сообщение попадает сюда из ConnectionToClient)
-        // по сути его нужно просто транслировать в serverLogic так как обработка делается там
-        serverLogic.acceptMessage(sessionId,message);
+        serverLogic.acceptMessage(sessionId, message);
     }
 
-    public void closeConnection(String sessionId){
-        //TODO: закрытие клиентского подключения (ConnectionToClient) и удаление его из connections
-        connections.get(sessionId).close();
-        connections.remove(sessionId);
-
+    public synchronized void closeConnection(String sessionId){
+        ConnectionToClient connectionToClient = connections.get(sessionId);
+        if (connectionToClient != null) {
+            connectionToClient.close();
+            connections.remove(sessionId);
+        }
+        serverLogic.unregisterClient(sessionId);
     }
 
-    public void sendMessageToClient(String sessionId, ServerMessage serverMessage){
+    public synchronized void sendMessageToClient(String sessionId, ServerMessage serverMessage){
         //TODO: отправка сообщения конкретному клиенту
-        if(connections.get(sessionId)!=null)
-        connections.get(sessionId).sendMessage(serverMessage);
+        if (connections.get(sessionId) != null)
+            connections.get(sessionId).sendMessage(serverMessage);
         else System.out.println("wrong session ID");
     }
 
-    public void sendMessageToAllClients(ServerMessage serverMessage){
-        //TODO: отправка сообщения всем клиентам
-        connections.forEach((s, connectionToClient) -> connections.get(s).sendMessage(serverMessage));
+    public synchronized void sendMessageToAllClients(ServerMessage serverMessage){
+        connections.forEach((s, connectionToClient) -> connectionToClient.sendMessage(serverMessage));
     }
 
     public void openSocket() throws IOException {
@@ -67,7 +64,7 @@ public class ServerConnections {
         new Thread(serverSocketListener).start(); //запуск потока который слушает новые подключения
     }
 
-    public void close() throws IOException {
+    public synchronized void close() throws IOException {
         serverSocket.close();
         connections.values().forEach(connectionToClient -> connectionToClient.close());
     }

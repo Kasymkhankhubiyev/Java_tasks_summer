@@ -26,9 +26,13 @@ public class ServerConnections {
 
     public synchronized void processNewSocket(Socket socket){
         String sessionID = generateSessionId();
-        ConnectionToClient connectionToClient = new ConnectionToClient(sessionID, socket, this);
-        connections.put(sessionID, connectionToClient);
-        connectionToClient.start();
+        try {
+            ConnectionToClient connectionToClient = new ConnectionToClient(sessionID, socket, this);
+            connections.put(sessionID, connectionToClient);
+            connectionToClient.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void processMessageFromClient(String sessionId, ClientMessage message){

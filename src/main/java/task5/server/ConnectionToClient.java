@@ -5,17 +5,20 @@ import task5.messages.ServerMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ConnectionToClient{
     private final String sessionId;
     private final Socket socket;
     private final ServerConnections serverConnections;
+    private final ObjectOutputStream objectOutputStream;
 
-    public ConnectionToClient(String sessionId, Socket socket, ServerConnections serverConnections) {
+    public ConnectionToClient(String sessionId, Socket socket, ServerConnections serverConnections) throws IOException {
         this.sessionId = sessionId;
         this.socket = socket;
         this.serverConnections = serverConnections;
+        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
     private Runnable runnable() {
@@ -45,7 +48,11 @@ public class ConnectionToClient{
     }
 
     public void sendMessage(ServerMessage serverMessage){
-        //TODO: отправка сообщения клиенту
+        try {
+            objectOutputStream.writeObject(serverMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void start(){

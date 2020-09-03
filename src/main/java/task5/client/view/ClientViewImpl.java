@@ -64,6 +64,20 @@ public class ClientViewImpl implements ClientView {
         newMessageArea.setBorder(border);
         usersListScrollPane.setBorder(border);
 
+        connectButton.addActionListener(e ->
+                clientModel.connectToServer(hostTextField.getText(),
+                        Integer.parseInt(portTextField.getText()),
+                        usernameTextField.getText())              );
+
+        disconnectButton.addActionListener(e -> {
+            clientModel.disconnectFromServer();
+        });
+
+        sendButton.addActionListener(e ->{
+                    clientModel.sendMessage(newMessageArea.getText());
+                    newMessageArea.setText("");
+                });
+
         disconnectedFromServer();
     }
 

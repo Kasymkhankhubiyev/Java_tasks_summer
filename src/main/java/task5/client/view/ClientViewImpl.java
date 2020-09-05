@@ -7,6 +7,9 @@ import task5.client.model.ClientView;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 public class ClientViewImpl implements ClientView {
@@ -29,6 +32,8 @@ public class ClientViewImpl implements ClientView {
     private final JEditorPane messagesArea = new JEditorPane();
     private final JEditorPane newMessageArea = new JEditorPane();
     private final JButton sendButton = new JButton("Send");
+
+    private final JButton sendFileButton = new JButton("Send file");
 
 
     public ClientViewImpl() {
@@ -54,8 +59,9 @@ public class ClientViewImpl implements ClientView {
         root.add(loginPanel);
         root.add(messagesArea, "spanx 2, spany 3, wrap, grow, pushx");
         root.add(usersListLabel, "wrap");
-        root.add(usersListScrollPane, "spany, wrap, pushy, grow, w 10:10:max");
-        root.add(newMessageArea, "skip 1, grow");
+        root.add(usersListScrollPane, "wrap, pushy, grow, w 10:10:max");
+        root.add(sendFileButton);
+        root.add(newMessageArea, "grow");
         root.add(sendButton);
 
 
@@ -78,7 +84,18 @@ public class ClientViewImpl implements ClientView {
                     newMessageArea.setText("");
                 });
 
+        sendFileButton.addActionListener(e -> sendFile());
+
         disconnectedFromServer();
+    }
+
+    private void sendFile(){
+        JFileChooser fc = new JFileChooser();
+        int response = fc.showOpenDialog(frame);
+        if (response == JFileChooser.APPROVE_OPTION){
+            File f = fc.getSelectedFile();
+            clientModel.sendFile(f);
+        }
     }
 
     public void start(){
@@ -148,6 +165,27 @@ public class ClientViewImpl implements ClientView {
     public void updateConnectedUsers(List<String> users) {
         SwingUtilities.invokeLater(() -> {
             usersList.setListData(users.toArray(new String[]{}));
+        });
+    }
+
+    @Override
+    public void saveFile(String username, String fileName, byte[] data) {
+        SwingUtilities.invokeLater(() -> {
+            int answer = JOptionPane.showConfirmDialog(frame, "Receive file: " + fileName + " from " + username + "?",
+                    "Error", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (answer == JOptionPane.YES_OPTION){
+                JFileChooser fc = new JFileChooser();
+                fc.setSelectedFile(new File(fileName));
+                int response = fc.showSaveDialog(frame);
+                if (response == JFileChooser.APPROVE_OPTION){
+                    File f = fc.getSelectedFile();
+                    try {
+                        Files.write(f.toPath(), data);
+                    } catch (IOException e) {
+                        showError("Unable to save a file!");
+                    }
+                }
+            }
         });
     }
 }

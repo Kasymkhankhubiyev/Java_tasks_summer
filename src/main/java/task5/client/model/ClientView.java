@@ -9,4 +9,5 @@ public interface ClientView {
     void showError(String error);
     void newMessage(String from, String message);
     void updateConnectedUsers(List<String> users);
+    void saveFile(String username, String fileName, byte[] data);
 }

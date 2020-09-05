@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ServerConnections {
@@ -57,6 +58,14 @@ public class ServerConnections {
 
     public synchronized void sendMessageToAllClients(ServerMessage serverMessage){
         connections.forEach((s, connectionToClient) -> connectionToClient.sendMessage(serverMessage));
+    }
+
+    public synchronized void sendMessageToAllClientsExceptOne(String sessionId, ServerMessage serverMessage){
+        connections.forEach((s, connectionToClient) -> {
+                    if (!Objects.equals(s, sessionId))
+                        connectionToClient.sendMessage(serverMessage);
+                }
+        );
     }
 
     public void openSocket() throws IOException {

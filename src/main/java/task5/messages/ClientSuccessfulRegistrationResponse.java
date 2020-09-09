@@ -2,10 +2,11 @@ package task5.messages;
 
 import java.util.Objects;
 
-public class ClientDeleted implements ServerMessage {
+// 1 c)
+public class ClientSuccessfulRegistrationResponse implements ServerMessage {
     public final String sessionId;
 
-    public ClientDeleted(String sessionId) {
+    public ClientSuccessfulRegistrationResponse(String sessionId) {
         this.sessionId = sessionId;
     }
 
@@ -13,7 +14,7 @@ public class ClientDeleted implements ServerMessage {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ClientRegistered that = (ClientRegistered) o;
+        ClientSuccessfulRegistrationResponse that = (ClientSuccessfulRegistrationResponse) o;
         return Objects.equals(sessionId, that.sessionId);
     }
 

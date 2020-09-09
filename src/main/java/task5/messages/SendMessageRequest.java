@@ -2,26 +2,27 @@ package task5.messages;
 
 import java.util.Objects;
 
-public class MessageFromServer implements ServerMessage{
+//3 a)
+public class SendMessageRequest implements ClientMessage{
     public final String message;
-    public final String chatNameFrom;
+    public final String sessionId;
 
-    public MessageFromServer(String message, String chatNameFrom) {
+    public SendMessageRequest(String message, String sessionId) {
         this.message = message;
-        this.chatNameFrom = chatNameFrom;
+        this.sessionId = sessionId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MessageFromServer that = (MessageFromServer) o;
+        SendMessageRequest that = (SendMessageRequest) o;
         return Objects.equals(message, that.message) &&
-                Objects.equals(chatNameFrom, that.chatNameFrom);
+                Objects.equals(sessionId, that.sessionId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message, chatNameFrom);
+        return Objects.hash(message, sessionId);
     }
 }

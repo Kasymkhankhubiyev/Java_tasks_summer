@@ -2,10 +2,11 @@ package task5.messages;
 
 import java.util.Objects;
 
-public class ServerSuccessAnswer implements ServerMessage{
+//1 b), 2 b), 3 b), 5 b)
+public class ServerErrorRespond implements ServerMessage{
     public final String message;
 
-    public ServerSuccessAnswer(String message){
+    public ServerErrorRespond(String message) {
         this.message = message;
     }
 
@@ -13,7 +14,7 @@ public class ServerSuccessAnswer implements ServerMessage{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ServerSuccessAnswer that = (ServerSuccessAnswer) o;
+        ServerErrorRespond that = (ServerErrorRespond) o;
         return Objects.equals(message, that.message);
     }
 
@@ -21,5 +22,4 @@ public class ServerSuccessAnswer implements ServerMessage{
     public int hashCode() {
         return Objects.hash(message);
     }
-
 }

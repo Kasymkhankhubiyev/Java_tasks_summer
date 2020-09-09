@@ -2,10 +2,11 @@ package task5.messages;
 
 import java.util.Objects;
 
-public class NewClientConnected implements ServerMessage{
+//6 a)
+public class ClientConnectedBroadcast implements ServerMessage{
     public final String username;
 
-    public NewClientConnected(String username) {
+    public ClientConnectedBroadcast(String username) {
         this.username = username;
     }
 
@@ -13,7 +14,7 @@ public class NewClientConnected implements ServerMessage{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NewClientConnected that = (NewClientConnected) o;
+        ClientConnectedBroadcast that = (ClientConnectedBroadcast) o;
         return Objects.equals(username, that.username);
     }
 

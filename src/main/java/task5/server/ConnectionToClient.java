@@ -1,21 +1,24 @@
 package task5.server;
 
+import task5.messages.ClientMessage;
 import task5.messages.ServerMessage;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class ConnectionToClient{
     private final String sessionId;
     private final Socket socket;
     private final ServerConnections serverConnections;
+    private final ObjectOutputStream objectOutputStream;
 
-    public ConnectionToClient(String sessionId, Socket socket, ServerConnections serverConnections) {
+    public ConnectionToClient(String sessionId, Socket socket, ServerConnections serverConnections) throws IOException {
         this.sessionId = sessionId;
         this.socket = socket;
         this.serverConnections = serverConnections;
-        new Thread(runnable()).start(); // запуск потока который слушает клиента
+        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
     private Runnable runnable() {
@@ -28,17 +31,32 @@ public class ConnectionToClient{
                 // но перед тем как он закончится он должен уведомить ServerConnections об этом
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 while(true){
-
+                    try {
+                        Object object = objectInputStream.readObject();
+                        if (object instanceof ClientMessage){
+                            ClientMessage clientMessage = (ClientMessage) object;
+                            serverConnections.processMessageFromClient(sessionId, clientMessage);
+                        }
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
-
-
             } catch (IOException ignored) {
             }
+            serverConnections.closeConnection(sessionId);
         };
     }
 
     public void sendMessage(ServerMessage serverMessage){
-        //TODO: отправка сообщения клиенту
+        try {
+            objectOutputStream.writeObject(serverMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start(){
+        new Thread(runnable()).start(); // запуск потока который слушает клиента
     }
 
     public void close(){

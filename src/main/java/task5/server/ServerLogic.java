@@ -1,6 +1,5 @@
 package task5.server;
 
-import task5.client.Client;
 import task5.messages.*;
 
 import java.util.*;
@@ -14,37 +13,43 @@ public class ServerLogic {
         this.serverConnections = serverConnections;
     }
 
-    public void acceptMessage(String sessionId, ClientMessage clientMessage){
+    public synchronized void acceptMessage(String sessionId, ClientMessage clientMessage){
         //TODO: обработка логики входящего сообщения
         // думаю в этом методе стоит только определить какого типа это сообщение, а дальше раскидать
         // обработку конкретных действий по разным методам
+
+        if (clientMessage instanceof RegisterClient) {
+            registerClient(sessionId, (RegisterClient) clientMessage);
+        } else if (clientMessage instanceof SendMessage)
+            messageFromClient(sessionId, (SendMessage) clientMessage);
+
     }
 
-    public void registerClient(String sessionId, RegisterClient registerClient) {
-        //TODO: этот код нужно немного переписать, здесь поменялась сигнатура метода
-        // Нужно ответить клиентам через serverConnection.sendMessageToClient (или его версию для всех)
-        //if (connectedUsers.containsValue(registerClient.chatClientName))
-          //  serverConnections.sendMessageToClient(connectedUsers.);
-//        if (connectedUsers.containsValue(registerClient.chatClientName))
-//            return new ServerErrorAnswer("This name is already in use");
-//        String sessionId = UUID.randomUUID().toString();
-//        connectedUsers.put(sessionId, registerClient.chatClientName);
-//        Client client = new Client(registerClient.userName, registerClient.chatClientName, sessionId);
-//        serverConnections.addClient(registerClient.userName, sessionId);
-//        return new ClientRegistered(sessionId);
-    }
-
-    public void messageFromClient(String sessionId, SendMessage sendMessage){
-        String clientName = connectedUsers.get(sendMessage.sessionId);
-        if (clientName != null) {
-            MessageFromServer messageFromServer = new MessageFromServer(sendMessage.message, clientName);
-            messagesHistory.add(messageFromServer);
-            //TODO: send message to all clients
-
+    public synchronized void registerClient(String sessionId, RegisterClient registerClient) {
+        if (connectedUsers.containsValue(registerClient.userName)){
+            serverConnections.sendMessageToClient(sessionId,
+                    new ServerErrorAnswer("Username " + registerClient.userName + " is already used."));
+        } else {
+            connectedUsers.put(sessionId, registerClient.userName);
+            serverConnections.sendMessageToClient(sessionId,
+                    new ClientRegistered(sessionId));
+            serverConnections.sendMessageToAllClients(new NewClientConnected(registerClient.userName));
         }
     }
 
-    public void unregisterClient(String connectionId){
-        //TODO: реакция на отключение пользователя
+    public synchronized void messageFromClient(String sessionId, SendMessage sendMessage){
+        String clientName = connectedUsers.get(sessionId);
+        if (clientName != null) {
+            MessageFromServer messageFromServer = new MessageFromServer(sendMessage.message, clientName);
+            messagesHistory.add(messageFromServer);
+            serverConnections.sendMessageToAllClients(messageFromServer);
+        }
+    }
+
+    public synchronized void unregisterClient(String connectionId){
+        if (connectedUsers.containsKey(connectionId)){
+            connectedUsers.remove(connectionId);
+            serverConnections.closeConnection(connectionId);
+        }
     }
 }
